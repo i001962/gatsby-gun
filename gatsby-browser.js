@@ -1,7 +1,14 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/browser-apis/
- */
+import React from 'react'
+import { GlobalContextProvider } from './src/services/context'
+// import { redirect } from './src/services/i18n'
 
-// You can delete this file if you're not using it
+export const disableCorePrefetching = () => true
+
+export const onInitialClientRender = () => {
+    // on runtime first starts, redirect dummy pages
+   //  redirect()
+}
+
+export const wrapRootElement = ({ element }) => (
+    <GlobalContextProvider>{element}</GlobalContextProvider>
+)
