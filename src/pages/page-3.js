@@ -11,7 +11,7 @@ export default class User extends Component {
         return (
          
                 <section className="section">
-                    <DataTable pageContext={pageContext} path="user" />
+                    <DataTable pageContext={pageContext} path="kmmtest" />
                 </section>
         )
     }

@@ -5,21 +5,24 @@ export default class DataTable extends Component {
 
     componentDidMount() {
         if (window) {
-            var { gun, sea } = window
-            gun.get('kmmtest').on(data => {
+            var { gun } = window
+            console.log(this.props.path)
+            gun.get(this.props.path).on(data => {
+              console.log(data)
                 Object.keys(data).map(async key => {
                     try {
-                        var _data = await sea.verify(JSON.parse(data[key]), key)
-                        if (key === _data.pub) {
-                            this.setState({ [key]: _data })
-                            var headers = this.state.headers
-                            for (var _key in _data) {
-                                if (!headers[_key]) {
-                                    headers[_key] = _key
-                                }
-                            }
-                            this.setState({ headers: headers })
-                        }
+                        console.log(key)
+                        if (key !== '_' ) {
+                          console.log(data[key], 'inside')
+                          var _data = data[key]
+                          this.setState({ key: _data })
+                          var headers = this.state.headers
+                            if (!headers[key]) {
+                              headers[key] = key
+                            }  
+                              this.setState({ headers: headers })
+
+                          }
                     } catch (error) {}
                 })
             })
@@ -44,17 +47,15 @@ export default class DataTable extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.keys(this.state).map(
+                    {Object.keys(this.state).map(
                             key =>
                                 key !== 'headers' && (
                                     <tr key={key}>
-                                        {Object.keys(this.state[key]).map(
-                                            _key => (
-                                                <td key={_key}>
-                                                    {this.state[key][_key]}
+                                                <td key={key}>
+                                                    {this.state[key]}
                                                 </td>
-                                            )
-                                        )}
+                                            
+                                        
                                     </tr>
                                 )
                         )}
