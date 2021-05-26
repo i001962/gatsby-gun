@@ -17,9 +17,10 @@ export class GlobalContextProvider extends Component {
         this.state = defaultState
 
         if (window && !(window.gun || window.user || window.sea)) {
-            window.gun = Gun(['https://gun-us.herokuapp.com/gun','https://kmm-gun.herokuapp.com/'])
+            // window.gun = Gun(['https://gun-us.herokuapp.com/gun','https://kmm-gun.herokuapp.com/'])
+            window.gun = Gun('https://gun-us.herokuapp.com/gun')
             window.user = window.gun.user()
-            window.sea = Gun.SEA
+            window.sea = Gun.SEA // TODO stopped using this as goal one was to get service workers implemented
             window.authenticated = new CustomEvent('authenticated', {
                 detail: { authenticated: true },
             })

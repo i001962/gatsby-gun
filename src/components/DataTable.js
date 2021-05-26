@@ -1,28 +1,35 @@
-import React, { Component } from 'react'
+import React, {
+    Component
+} from 'react'
 
 export default class DataTable extends Component {
-    state = { headers: [] }
+    state = {
+        headers: []
+    }
 
     componentDidMount() {
         if (window) {
-            var { gun } = window
+            var {
+                gun
+            } = window
             console.log(this.props.path)
             gun.get(this.props.path).on(data => {
-              console.log(data)
+                console.log(data)
                 Object.keys(data).map(async key => {
                     try {
                         console.log(key)
-                        if (key !== '_' ) {
-                          console.log(data[key], 'inside')
-                          var _data = data[key]
-                          this.setState({ key: _data })
-                          var headers = this.state.headers
+                        if (key !== '_') {
+                            console.log(data[key], 'inside')
+                            var headers = this.state.headers
                             if (!headers[key]) {
-                              headers[key] = key
-                            }  
-                              this.setState({ headers: headers })
-
-                          }
+                                var temp = {"key":key, "value":data[key]}
+                                headers[key] = key // todo temp into this then render both key and value
+                            }
+                           
+                            this.setState({
+                                headers: headers
+                            })
+                        }
                     } catch (error) {}
                 })
             })
@@ -36,31 +43,14 @@ export default class DataTable extends Component {
     }
 
     render() {
-        return (
-            <div className="table-container">
-                <table className="table is-bordered is-striped is-hoverable is-fullwidth">
-                    <thead>
-                        <tr>
-                            {Object.keys(this.state['headers']).map(key => (
-                                <td key={key}>{this.state['headers'][key]}</td>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {Object.keys(this.state).map(
-                            key =>
-                                key !== 'headers' && (
-                                    <tr key={key}>
-                                                <td key={key}>
-                                                    {this.state[key]}
-                                                </td>
-                                            
-                                        
-                                    </tr>
-                                )
-                        )}
-                    </tbody>
-                </table>
+        return ( <
+            div className = "table-container" >
+            {
+                Object.keys(this.state['headers']).map(key => ( 
+                    <p key={key}> {this.state['headers'][key]}</p>
+                    
+                    ))
+            } 
             </div>
         )
     }
